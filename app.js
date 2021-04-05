@@ -96,16 +96,27 @@ app.post("/", function(req, res) {
 });
 
 app.post("/delete", function(req, res){
+
+
   const checkedItemId = req.body.checkbox; // 12 mongo; this gets the database id of checked data crossed off the node list
 
-Item.deleteOne({id:checkedItemId}, function(err){
-  if (err){
-    console.log(err);
-  }else{
-    console.log("successfully deleted");
+
+Item.findByIdAndRemove(checkedItemId,function(err){
+  if (!err){
+    console.log("Item successfully removed.");
     res.redirect("/");
-  }
+  };
 });
+
+
+// Item.deleteOne({id:checkedItemId}, function(err){
+//   if (err){
+//     console.log(err);
+//   }else{
+//     console.log("successfully deleted");
+//     res.redirect("/");
+//   }
+// });
 
 });
 
