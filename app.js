@@ -54,7 +54,7 @@ app.get("/", function(req, res) {
           console.log("Successfully inserted new data");
         }
       });
-      res.render("/");
+      res.render("/"); // go back to the root page
     }else{
       res.render("list", { // this displays a new page called 'list.html or list.ejs'
         listTitle: "Today", // this is the title in the list.ejs
@@ -72,20 +72,44 @@ app.get("/", function(req, res) {
 app.post("/", function(req, res) {
 
 
-  let item = req.body.newItem;
+  const itemName = req.body.newItem;
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-    console.log("hello")
+  const item = new Item({ // 10 mongo: this add the new 2do into the db
+    name: itemName
+  });
 
-  } else {
-    items.push(item);
-    res.redirect("/");
-    console.log("hi")
-  }
+  item.save(); // 11 mongo: this saves the new 2do time in the db
+
+  res.redirect("/"); // 12mongo: this displays newly saved data and all the other data.
+
+  // if (req.body.list === "Work") {
+  //   workItems.push(item);
+  //   res.redirect("/work");
+  //   console.log("hello")
+  //
+  // } else {
+  //   items.push(item);
+  //   res.redirect("/");
+  //   console.log("hi")
+  // }
 
 });
+
+app.post("/delete", function(req, res){
+  const checkedItemId = req.body.checkbox; // 12 mongo; this gets the database id of checked data crossed off the node list
+
+Item.deleteOne({id:checkedItemId}, function(err){
+  if (err){
+    console.log(err);
+  }else{
+    console.log("successfully deleted");
+    res.redirect("/");
+  }
+});
+
+});
+
+
 
 app.get("/work", function(req, res) {
   res.render("list", {
