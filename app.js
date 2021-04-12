@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose"); //1.mongoose
+const _ = require("lodash");
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todoListDB", { // 2.mongoose database naming
+mongoose.connect("mongodb+srv://admin-mary:test123@cluster0.h39dx.mongodb.net/todoListDB?retryWrites=true&w=majority/", { // 2.mongoose database naming
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -78,7 +79,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/:customListName", function(req, res) { //When the URL http://localhost:3030/work is entered, work is put in the variable ‘routeName’ and printed in the console
-  const customListName = req.params.customListName; //goes in a variable "customListName"
+  const customListName = _.capitalize(req.params.customListName); //goes in a variable "customListName"; plus, its first letter is capitalized
 
   List.findOne({name: customListName}, function(err, foundList) { //17 mongo; this checks if new list name already exists then this stops it from being entered again.
     if (!err) {
@@ -134,15 +135,24 @@ app.post("/delete", function(req, res) {
 
 
   const checkedItemId = req.body.checkbox; // 12 mongo; this gets the database id of checked data crossed off in the node list.ejs
+  const listName = req.body.listName; // 21 mongo: gets list name from the list.ejs 'hidden input tag' called listName
 
-
-  Item.findByIdAndRemove(checkedItemId, function(err) { // 13 mongo; deletes data from the db using the i.d. of data from the checkbox variable
-    if (!err) {
-      console.log("Item successfully removed.");
-      res.redirect("/"); // this take take the app to the root page
-    };
-  });
+  if (listName === "Today"){ // 22 mongo: if the listName is default listName then delete like this  or
+    Item.findByIdAndRemove(checkedItemId, function(err) { // 13 mongo; deletes data from the db using the i.d. of data from the checkbox variable
+      if (!err) {
+        console.log("Item successfully removed.");
+        res.redirect("/"); // this takes the app to the root page
+      }
+    });
+  }else{
+    List.findOneAndUpdate({name:listName},{$pull:{items:{_id:checkedItemId}}}, function(err, foundList){
+      if (!err){
+        res.redirect("/" + listName);
+      }
+    });
+  }
 });
+
 
 
 app.post("/work", function(req, res) {
