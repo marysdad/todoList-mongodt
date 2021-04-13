@@ -168,11 +168,9 @@ app.get("/about", function(req, res) {
 //this heroko code to listen on their port and locahost port
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 3030;
+  port = 3000;
 }
-app.listen(port);
 //this heroko code to listen on their port and locahost port
-
 
 
 app.listen(port, function() {
