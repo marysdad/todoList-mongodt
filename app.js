@@ -165,6 +165,16 @@ app.get("/about", function(req, res) {
   res.render("about");
 })
 
-app.listen(3030, function() {
-  console.log("server started on port 3030");
+//this heroko code to listen on their port and locahost port
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3030;
+}
+app.listen(port);
+//this heroko code to listen on their port and locahost port
+
+
+
+app.listen(port, function() {
+  console.log("Server has  started successfully");
 });

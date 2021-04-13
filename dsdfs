@@ -1,0 +1,29 @@
+[33mcommit d07a07a774671c935a61e15c609857982d835528[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Mary Kaki <justonly4testing@gmail.com>
+Date:   Mon Apr 12 18:06:02 2021 +0300
+
+    last commit to host the 2doList
+
+[33mcommit 30dde6c3b2593d3090d8078aebd7da135fe4c8fe[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Mary Kaki <justonly4testing@gmail.com>
+Date:   Tue Apr 6 10:47:43 2021 +0300
+
+    add feature to add new custom lists and add/delete there data
+
+[33mcommit d46faf65ec4c39513b14b21a9d60d4c6a361c00e[m
+Author: Mary Kaki <justonly4testing@gmail.com>
+Date:   Mon Apr 5 07:44:30 2021 +0300
+
+    changed the mode mongo deleteOne method to findByIdAndRemove method
+
+[33mcommit f3c72722d3ad5b40e8b9a92790f0b082ba5359e3[m
+Author: Mary Kaki <justonly4testing@gmail.com>
+Date:   Mon Apr 5 07:06:00 2021 +0300
+
+    add delete fuctionality to delete items from the todolist
+
+[33mcommit 375735a05eb9a5c6ce6a67e0d967aef3b123fa65[m
+Author: Mary Kaki <justonly4testing@gmail.com>
+Date:   Sun Apr 4 11:13:47 2021 +0300
+
+    added mongoose db to app.js to read data from db into a node page
